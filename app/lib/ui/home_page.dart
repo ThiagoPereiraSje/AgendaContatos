@@ -1,8 +1,7 @@
 import 'dart:io';
-
 import 'package:app/helpers/contact.dart';
 import 'package:flutter/material.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'contact_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -140,7 +139,10 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.all(10.0),
                     child: FlatButton(
                       child: Text("Ligar", style: TextStyle(color: Colors.red),),
-                      onPressed: () {},
+                      onPressed: () {
+                        launch("tel:${contacts[index].phone}");
+                        Navigator.pop(context);
+                      },
                     ),
                   ),
 
