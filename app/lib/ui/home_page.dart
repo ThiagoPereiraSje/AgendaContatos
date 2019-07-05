@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:app/helpers/contact.dart';
 import 'package:flutter/material.dart';
 
+import 'contact_page.dart';
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -25,11 +27,7 @@ class _HomePageState extends State<HomePage> {
 
     // helper.saveContatc(c);
 
-    helper.getAllContacts().then((list) {
-      setState(() {      
-        contacts = list;
-      });      
-    });
+    _getAllContacts();
   }
 
   @override
@@ -45,7 +43,7 @@ class _HomePageState extends State<HomePage> {
 
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
+          _showContactPage();
         },
 
         child: Icon(Icons.add),
@@ -97,6 +95,32 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
+
+      onTap: () {
+        _showContactPage(contact: contacts[index]);
+      },
     );
+  }
+
+  void _showContactPage({Contact contact}) async {
+    final recContact = await Navigator.push(context, MaterialPageRoute(builder: (context) => ContactPage(contact: contact,)));
+
+    if(recContact != null) {
+      if(contact != null) {
+        await helper.updateContact(recContact);
+      } else {
+        await helper.saveContact(recContact);
+      }
+
+      _getAllContacts();
+    }
+  }
+
+  void _getAllContacts() {
+    helper.getAllContacts().then((list) {
+      setState(() {      
+        contacts = list;
+      });      
+    });
   }
 }
