@@ -70,8 +70,8 @@ class _HomePageState extends State<HomePage> {
           child: Row(
             children: <Widget>[
               Container(
-                width: 80.0,
-                height: 80.0,
+                width: 60.0,
+                height: 60.0,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
@@ -85,10 +85,11 @@ class _HomePageState extends State<HomePage> {
               Padding(
                 padding: EdgeInsets.only(left: 10.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(contacts[index].name ?? "", style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.bold),),
-                    Text(contacts[index].email ?? "", style: TextStyle(fontSize: 18.0),),
-                    Text(contacts[index].phone ?? "", style: TextStyle(fontSize: 18.0),),
+                    Text(contacts[index].name ?? "", style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),),
+                    Text(contacts[index].email ?? "", style: TextStyle(fontSize: 14.0),),
+                    Text(contacts[index].phone ?? "", style: TextStyle(fontSize: 14.0),),
                   ],
                 ),
               )
