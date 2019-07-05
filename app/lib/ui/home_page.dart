@@ -23,9 +23,8 @@ class _HomePageState extends State<HomePage> {
     // c.name = "Thiago Pereira";
     // c.email = "thiagopereiramail@gmail.com";
     // c.phone = "12345678";
-    // c.img = "imgTest";
 
-    // helper.saveContatc(c);
+    // helper.saveContact(c);
 
     _getAllContacts();
   }
@@ -73,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: contacts[index].img != "imgTest" ? 
+                    image: contacts[index].img != null ? 
                       FileImage(File(contacts[index].img)) :
                       AssetImage("images/person.png")
                   )
@@ -104,7 +103,7 @@ class _HomePageState extends State<HomePage> {
 
   void _showContactPage({Contact contact}) async {
     final recContact = await Navigator.push(context, MaterialPageRoute(builder: (context) => ContactPage(contact: contact,)));
-
+    
     if(recContact != null) {
       if(contact != null) {
         await helper.updateContact(recContact);
