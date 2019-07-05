@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'contact_page.dart';
 
+enum OrderOptions {orderAZ, orderZA}
+
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -17,14 +19,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
-    // Contact c = Contact();
-    // c.name = "Thiago Pereira";
-    // c.email = "thiagopereiramail@gmail.com";
-    // c.phone = "12345678";
-
-    // helper.saveContact(c);
-
     _getAllContacts();
   }
 
@@ -35,6 +29,22 @@ class _HomePageState extends State<HomePage> {
         title: Text("Contatos"),
         backgroundColor: Colors.red,
         centerTitle: true,
+        actions: <Widget>[
+          PopupMenuButton<OrderOptions>(
+            itemBuilder: (context) => <PopupMenuEntry<OrderOptions>>[
+              const PopupMenuItem<OrderOptions>(
+                child: Text("Ordernar de A-Z"),
+                value: OrderOptions.orderAZ,
+              ),
+
+              const PopupMenuItem<OrderOptions>(
+                child: Text("Ordernar de Z-A"),
+                value: OrderOptions.orderZA,
+              ),
+            ],
+            onSelected: _orderList,
+          )
+        ],
       ),
 
       backgroundColor: Colors.white,
@@ -178,5 +188,23 @@ class _HomePageState extends State<HomePage> {
         );
       },
     );
+  }
+
+  _orderList(OrderOptions result) {
+    switch (result) {
+      case OrderOptions.orderAZ :
+        contacts.sort((a,b) {
+          return a.name.toLowerCase().compareTo(b.name.toLowerCase());
+        });
+      break;
+
+      case OrderOptions.orderZA:
+        contacts.sort((a,b) {
+          return b.name.toLowerCase().compareTo(a.name.toLowerCase());
+        });
+      break;
+    }
+
+    setState(() {});
   }
 }
