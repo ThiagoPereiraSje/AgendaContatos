@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
       ),
 
       onTap: () {
-        _showContactPage(contact: contacts[index]);
+        _showOptions(context, index);
       },
     );
   }
@@ -121,5 +121,60 @@ class _HomePageState extends State<HomePage> {
         contacts = list;
       });      
     });
+  }
+
+  void _showOptions(BuildContext context, index){
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return BottomSheet(
+          onClosing: () {},
+
+          builder: (context) {
+            return Container(
+              padding: EdgeInsets.all(10.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: FlatButton(
+                      child: Text("Ligar", style: TextStyle(color: Colors.red),),
+                      onPressed: () {},
+                    ),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: FlatButton(
+                      child: Text("Editar", style: TextStyle(color: Colors.red),),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        _showContactPage(contact: contacts[index]);
+                      },
+                    ),
+                  ),
+
+                  Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: FlatButton(
+                      child: Text("Excluir", style: TextStyle(color: Colors.red),),
+                      onPressed: () {
+                        helper.deleteContact(contacts[index].id);
+                        
+                        setState(() {
+                          contacts.removeAt(index);
+                          Navigator.pop(context);
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 }
